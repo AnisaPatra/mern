@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
         min: 3,
-        lowercase: true
+        lowercase: true,
     },
     gstin: {
         type: String,
