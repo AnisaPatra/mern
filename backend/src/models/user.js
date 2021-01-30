@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        min: 3,
-        max: 20
+        minlength: 3,
+        maxlength: 20
     },
     username: {
         type: String,
@@ -21,21 +21,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        min: 3,
-        max: 20
+        minlength: 3,
+        maxlength: 50
     },
     email: {
         type: String,
         required: true,
         trim: true,
-        min: 3,
+        unique: true,
         lowercase: true,
     },
     gstin: {
         type: String,
         trim: true,
         unique: true,
-        required: true
+        required: true,
+        validate: /^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/
     },
     hash_password: {
         type: String,
@@ -43,13 +44,12 @@ const userSchema = new mongoose.Schema({
     },
     role: {        
         type: String,
-        enum: ['retailer','seller'],
+        enum: ['Retailer','Seller'],
         required: true
     },
     contactNumber: { 
-        type: String, 
-        min: 10, 
-        max: 13,
+        type: String,
+        validate: /^(\+91[\-\s]?)?[0]?[789]\d{9}$/,
         required: true,
         unique: true
      },

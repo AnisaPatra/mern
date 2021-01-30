@@ -1,6 +1,7 @@
 const Category = require("../models/category");
 const slugify = require("slugify");
 const shortid = require("shortid");
+const category = require("../models/category");
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -69,4 +70,22 @@ exports.getParentCategory = (req,res) => {
   Category.find({ "parentCategory": { "$exists": false } })
   .then(exercises => res.json(exercises))
   .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.categoryUpdate = (req, res) => {
+  Category.find(req.params.id)
+      .then(category => {
+          category.name = req.body.name;
+          category.CategoryImage = req.body.CategoryImage;
+          category.save()
+              .then(() => res.json('Category updated!'))
+              .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.deleteCategory = (req, res) => {
+  Category.findByIdAndDelete(req.params.id)
+      .then(() => res.json('Category deleted.'))
+      .catch(err => res.status(400).json('Error: ' + err));
 }
