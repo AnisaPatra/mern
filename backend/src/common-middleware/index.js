@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
       cb(null, path.join(path.dirname(__dirname), "uploads"));
     },
     filename: function (req, file, cb) {
-      cb(null, shortid.generate() + "-" + file.originalname);
+      cb(null, shortid.generate() + "_" + file.originalname);
     },
   });
 
@@ -28,23 +28,23 @@ exports.requireSignin = (req,res,next) => {
     
 }
 
-exports.retailerMiddleware = (req,res,next) =>{
-    if(req.user.role != "retailer"){
+exports.adminMiddleware = (req,res,next) =>{
+    if(req.user.role != "admin"){
+        return res.status(400).json({message : "Admin access Denied"})
+    }
+    next();
+}
+
+exports.adminorsellerMiddleware = (req,res,next) =>{
+    if(req.user.role == "Retailer"){
         return res.status(400).json({message : "Access Denied"})
     }
     next();
 }
 
-exports.sellerMiddleware = (req,res,next) =>{
-    if(req.user.role != "seller"){
-        return res.status(400).json({message : "Seller access Denied"})
-    }
-    next();
-}
-
-exports.adminMiddleware = (req,res,next) =>{
-    if(req.user.role != "admin"){
-        return res.status(400).json({message : "Admin access Denied"})
+exports.adminorreatilerMiddleware = (req,res,next) =>{
+    if(req.user.role != "admin" || req.user.role != "Retailer"){
+        return res.status(400).json({message : "Access Denied"})
     }
     next();
 }

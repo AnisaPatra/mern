@@ -1,0 +1,44 @@
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    color: blueviolet;
+    background-color:   #0099e6;
+    width: 200px;
+}
+
+.nav-tabs .nav-link.active {
+    color: #000000;
+    background-color:#006699;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+    font-stretch: extra-expanded;
+    font-size: larger;
+    letter-spacing: 2px;
+    width: 100px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.topnav {
+    overflow: hidden;
+    height: 80px;
+    padding-top: 2px;
+}
+
+
+.tbody{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+    color: white;
+    font-stretch: extra-expanded;
+  }
+
+  body{
+      background-color: rgb(242, 242, 242);
+  }
+
+.input{
+    padding-top: 25px;
+    color: #333333;
+}

@@ -1,0 +1,12 @@
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    font-family:Gotham;
+    font-size: 50px;
+    font-variant: inherit;
+    font-style: oblique;
+    font-stretch: ultra-expanded;
+    font-weight: 1000;
+    transform: translate(-30%, -50%);
+  }

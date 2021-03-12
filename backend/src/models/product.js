@@ -33,7 +33,15 @@ const productSchema = new mongoose.Schema({
             review: String
         }
     ],
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    brand:{
+        type:String
+    },
+    m_c :{
+        type:String
+    },
+    
+    sub_category: { type: String },
+    parent_category:{type: String},
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     updatedAt: Date,
 

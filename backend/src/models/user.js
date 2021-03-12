@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
     },
     contactNumber: { 
         type: String,
-        validate: /^(\+91[\-\s]?)?[0]?[789]\d{9}$/,
+        validate: /^[789]\d{9}$/,
         required: true,
         unique: true
      },

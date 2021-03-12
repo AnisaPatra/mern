@@ -32,10 +32,7 @@ exports.validateSigninRequest = [
     .withMessage('Valid Email is required'),
     check('password')
     .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 character long'),
-    check('role')
-    .notEmpty()
-    .withMessage('Role is required')
+    .withMessage('Password must be at least 6 character long')
 ];
 
 exports.validateAdminSignupRequest = [

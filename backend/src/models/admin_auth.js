@@ -13,7 +13,7 @@ const adminSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        enum: ['anipatra2000@gmail.com']
+        enum: ['anipatra2000@gmail.com','anipatr2000@gmail.com']
     },
     hash_password: {
         type: String,

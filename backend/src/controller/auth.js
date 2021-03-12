@@ -52,11 +52,12 @@ exports.signup = (req, res) => {
 
 exports.signin_retailer = (req, res) => {
     User.findOne({ email: req.body.email, role: req.body.role })
-        .exec((error, user) => {
+        .exec(async(error, user) => {
             if (error) return res.status(400).json({ error });
             if (user) {
-                if (user.authenticate(req.body.password) && user.role === 'Retailer') {
-                    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                const isPassword = await user.authenticate(req.body.password);
+                if (isPassword && user.role === 'Retailer') {
+                    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
                     const { _id, email, contactNumber, role, shop_name, gstin } = user;
                     res.status(200).json({
                         token,
@@ -65,7 +66,7 @@ exports.signin_retailer = (req, res) => {
                 }
                 else {
                     return res.status(400).json({
-                        message: 'Something went wrong'
+                        message: "Invalid Password / EmailId"
                     })
                 }
             } else {
@@ -76,11 +77,12 @@ exports.signin_retailer = (req, res) => {
 
 exports.signin_seller = (req, res) => {
     User.findOne({ email: req.body.email, role: req.body.role })
-        .exec((error, user) => {
+        .exec(async(error, user) => {
             if (error) return res.status(400).json({ error });
             if (user) {
-                if (user.authenticate(req.body.password) && user.role === 'Seller') {
-                    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                const isPassword = await user.authenticate(req.body.password);
+                if (isPassword && user.role === 'Seller') {
+                    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
                     const { _id, email, contactNumber, role, shop_name, gstin } = user;
                     res.status(200).json({
                         token,
@@ -89,7 +91,7 @@ exports.signin_seller = (req, res) => {
                 }
                 else {
                     return res.status(400).json({
-                        message: 'Something went wrong'
+                        message: "Invalid Password / EmailId"
                     })
                 }
             } else {
@@ -98,63 +100,73 @@ exports.signin_seller = (req, res) => {
         });
 }
 
-exports.getSeller = (req, res) => {
-    User.find({ "role": "Seller" })
-        .then(exercises => res.json(exercises))
-        .catch(err => res.status(400).json('Error: ' + err));
-}
-
-exports.getUserById = (req,res) => {
+exports.getUserById = (req, res) => {
     User.findById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json('Error' +err))
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error' + err))
 }
 
 class APIfeatures {
-    constructor(query,querystring){
+    constructor(query, querystring) {
         this.query = query,
-        this.querystring = querystring;
+            this.querystring = querystring;
     }
-    sorting(){
-        if(this.query.sort){
+    sorting() {
+        if (this.query.sort) {
             const sortby = this.querystring.sort.split(',').join(' ');
-            this.query=this.query.sort(sortby);
+            this.query = this.query.sort(sortby);
         }
-        else{
-            this.query=this.query.sort('-createdAt');
+        else {
+            this.query = this.query.sort('-createdAt');
         }
         return this;
     }
 }
 
-exports.getRetailer = async(req, res) => {
-    try{
-        const features = new APIfeatures(User.find({ "role": "Retailer" }),req.query).sorting();
+exports.getRetailer = async (req, res) => {
+    try {
+        const features = new APIfeatures(User.find({ "role": "Retailer" }), req.query).sorting();
         const retailing = await features.query;
         res.status(200).json({
             retailing
         });
-    } catch(err){
+    } catch (err) {
         res.status(404).json({
-            status:'fail',
+            status: 'fail',
             message: err
         })
     }
 }
-exports.getUsers = async(req,res) => {
-    try{
-        const features = new APIfeatures(User.find(),req.query).sorting();
+
+exports.getSeller = async(req, res) => {
+    try {
+        const features = new APIfeatures(User.find({ "role": "Seller" }), req.query).sorting();
+        const retailing = await features.query;
+        res.status(200).json({
+            retailing
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err
+        })
+    }
+}
+
+exports.getUsers = async (req, res) => {
+    try {
+        const features = new APIfeatures(User.find(), req.query).sorting();
         const users = await features.query;
         res.status(200).json({
-            status:'success',
+            status: 'success',
             results: User.length,
             data: {
                 users
             }
         });
-    } catch(err){
+    } catch (err) {
         res.status(404).json({
-            status:'fail',
+            status: 'fail',
             message: err
         })
     }
@@ -208,8 +220,16 @@ exports.updateUser = (req, res) => {
             user.gstin = req.body.gstin;
             user.role = req.body.role;
             user.save()
-                .then(() => res.json('User updated!'))
+                .then(
+                    () => res.json('User updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
 }
+
+exports.signout = (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json({
+        message: "Signout successfully...!",
+    });
+};

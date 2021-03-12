@@ -1,35 +1,43 @@
-import React from 'react'
-import { Navbar , Nav ,NavDropdown, Button, Form, FormControl} from 'react-bootstrap';
+import React, { useEffect }  from 'react'
+import HomePage from './container/HomePage';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
+import Signin from './container/Signin';
+import PrivateRoute from './components/HOC/PrivateRoute';
+import { useDispatch, useSelector } from 'react-redux';
+import { isUserLoggedIn} from './actions/auth.actions';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { signout } from '../src/actions/auth.actions';
+import Food from './container/Food';
+import Clothing from './container/Clothing';
+import Footwear from './container/Footwear';
+import EA from './container/E&A';
+import HK from './container/H&K';
+import Product_Display from './container/Product_Display';
 
 function App() {
+  window.onunload = () => {
+    // Clear the local storage
+    window.localStorage.clear()
+ }
   return (
     <div className="App">
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-          <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-        <Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
-          </Form>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/category/Food" component={Food} />
+        <Route path="/category/Footwear" component={Footwear}/>
+        <Route path="/category/EA" component={EA}/>
+        <Route path="/category/HK" component={HK}/>
+        <Route path="/category/Clothing" component={Clothing}/>
+        <Route path="/signin" component={Signin} />
+        <Route path="/product/:id" component={Product_Display} />
+
+      </Switch>
     </div>
   );
+  
 }
+
 
 export default App;
