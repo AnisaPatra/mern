@@ -18,16 +18,10 @@ const SideNavigation = () => {
                         Products
                     </MDBListGroupItem>
                 </NavLink>
-                <NavLink to="/payment_integerations" activeClassName="activeClass">
+                <NavLink to="/order" activeClassName="activeClass">
                     <MDBListGroupItem>
                     <MDBIcon icon="shopping-cart" className="mr-3" size="lg"/>
                         Orders
-                    </MDBListGroupItem>
-                </NavLink>
-                <NavLink to="/accounts" activeClassName="activeClass">
-                    <MDBListGroupItem>
-                    <MDBIcon fab icon="cc-amazon-pay" className="mr-3" size="lg"/>
-                        Transactions
                     </MDBListGroupItem>
                 </NavLink>
             </MDBListGroup>

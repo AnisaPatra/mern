@@ -18,7 +18,8 @@ const categorySchema = new mongoose.Schema({
         type: String,
         maxlength:40,
         minlength:3
-      }
+      },
+      description:{ type: String},
 
 }, { timestamps: true });
 

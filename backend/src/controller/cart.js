@@ -17,7 +17,8 @@ exports.addItemToCart = (req,res) =>{
                     "$set" : {
                         "cartItems.$" : {
                             ...req.body.cartItems,
-                            quantity : parseInt(item.quantity + req.body.cartItems.quantity)
+                            quantity : parseInt(item.quantity + req.body.cartItems.quantity),
+                            price : parseInt(item.price + req.body.cartItems.price)
                         }
                     }
                 };
@@ -57,23 +58,22 @@ exports.addItemToCart = (req,res) =>{
     
 };
 
-/*
-exports.addItemToCart = (req,res) =>{
-    const cart = new Cart({
-        user: req.user._id,
-        cartItems: req.body.cartItems
-    });
-
-    cart.save((error,cart) =>{
-        if(error) return res.status(400).json({error});
-        if(cart){
-            return res.status(201).json({cart});
-        }
-    });
+exports.getCartItemByID = (req,res) =>{
+    Cart.findById(req.params.id)
+        .then(items => res.json(items))
+        .catch(err => res.status(400).json('Error' + err))
 }
-*/
 
-exports.getCartItems = (req,res) =>{
+exports.deleteCart = (req, res) => {
+    Cart.findByIdAndDelete(req.params.id)
+        .then(() => res.json('Cart deleted.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+}
 
-    res.json({message :'cartt'})
+var ObjectId = require('mongodb').ObjectId;
+
+exports.getCartByUser = (req,res) =>{
+    Cart.find({"user" : ObjectId(req.params.id)})
+    .then(pro => res.json(pro))
+    .catch(err => res.status(400).json(err))
 }

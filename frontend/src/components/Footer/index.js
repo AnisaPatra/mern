@@ -7,7 +7,7 @@ const FooterPage = () => {
       <MDBContainer fluid className="text-center text-md-left">
         <MDBRow>
           <MDBCol md="6">
-            <h5 className="title">Contact Us</h5><br/>
+            <h5 className="title" style={{fontSize: "30px", fontFamily : "Lora"}}>Contact Us</h5><br/>
             <p>
               <MDBIcon icon="map-marker-alt" style={{padding: "5px",paddingRight:"10px"}}/>
                      Vridhi Headquarters, J.N Road, Mulund(W), Maharashtra
@@ -22,7 +22,7 @@ const FooterPage = () => {
             </p>
           </MDBCol>
           <MDBCol md="6">
-            <h5 className="title">Stay In Touch</h5><br/>
+            <h5 className="title" style={{fontSize: "30px", fontFamily : "Lora"}}>Stay In Touch</h5><br/>
             <MDBIcon fab icon="linkedin" size="2x" style={{padding: "5px"}}/>
             <MDBIcon fab icon="facebook-square" size="2x" style={{padding: "5px"}}/>
             <MDBIcon fab icon="twitter-square" size="2x" style={{padding: "5px"}}/>

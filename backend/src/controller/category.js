@@ -5,7 +5,8 @@ const shortid = require("shortid");
 exports.addCategory = (req, res) => {
   const categoryObj = {
     name: req.body.name,
-    slug: `${slugify(req.body.name)}-${shortid.generate()}`
+    slug: `${slugify(req.body.name)}-${shortid.generate()}`,
+    description : req.body.description
   };
 
   if (req.file) {
@@ -43,23 +44,14 @@ exports.getParentCategory = (req,res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 }
 
-exports.getSubCategoryByParentName = (req,res) => {
-    try{
-      console.log(req.body.parentCategory);
-    Category.find({"parentCategory" : (req.body.parentCategory)})
-    .then(exercises => res.json(exercises))
-    .catch(err => res.status(400).json('Error: ' + err));
-    }
-    catch(err){
-      res.status(404).json('Error' + err)
-    }
-}
 
 exports.categoryUpdate = async (req, res) => {
   try{
     const {name, parentCategory, CategoryImage} = req.body;
     const category={
-      name: req.body.name}
+      name: req.body.name,
+      description : req.body.description
+    }
     if (req.file) {
       category.CategoryImage = "/public/" + req.file.filename;
     }
@@ -129,5 +121,17 @@ exports.getCategoriess = async (req, res) => {
           status: 'fail',
           message: err
       })
+  }
+}
+
+exports.getSubCategoryByParentName = (req,res) => {
+  try{
+    console.log(req.body.parentCategory);
+  Category.find({"parentCategory" : (req.body.parentCategory)})
+  .then(exercises => res.json(exercises))
+  .catch(err => res.status(400).json('Error: ' + err));
+  }
+  catch(err){
+    res.status(404).json('Error' + err)
   }
 }

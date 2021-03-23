@@ -9,30 +9,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isUserLoggedIn} from './actions/auth.actions';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { signout } from '../src/actions/auth.actions';
-import Food from './container/Food';
-import Clothing from './container/Clothing';
-import Footwear from './container/Footwear';
-import EA from './container/E&A';
-import HK from './container/H&K';
+import ParentCategory from '../src/container/ParentCategory';
 import Product_Display from './container/Product_Display';
+import Cart from './container/Cart';
+import Order from './container/Order';
 
 function App() {
-  window.onunload = () => {
-    // Clear the local storage
-    window.localStorage.clear()
- }
   return (
     <div className="App">
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/category/Food" component={Food} />
-        <Route path="/category/Footwear" component={Footwear}/>
-        <Route path="/category/EA" component={EA}/>
-        <Route path="/category/HK" component={HK}/>
-        <Route path="/category/Clothing" component={Clothing}/>
+        <Route path="/category/:id" component={ParentCategory} />
         <Route path="/signin" component={Signin} />
         <Route path="/product/:id" component={Product_Display} />
-
+        <Route path = "/cart/:id" component = {Cart}/>
+        <Route path = "/order/:id" component = {Order}/>
       </Switch>
     </div>
   );

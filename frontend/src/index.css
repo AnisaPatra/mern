@@ -12,6 +12,8 @@ code {
     monospace;
 }
 
+
+
 .navbar{
   background-color: black;
 }
@@ -23,3 +25,4 @@ code {
 .navbar-brand{
   color: white !important;
 }
+

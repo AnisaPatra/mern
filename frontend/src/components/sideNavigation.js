@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const SideNavigation = () => {
     return (
-        <div className="sidebar-fixed position-absolute">
+        <div className="sidebar-fixed">
             <MDBListGroup className="list-group-flush">
                 <NavLink exact={true} to="/" activeClassName="activeClass">
                     <MDBListGroupItem>

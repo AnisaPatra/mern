@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../components/Header';
+import Layout from '../../components/Layout';
 import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask } from "mdbreact";
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import n1 from '../../images/Capture (2).PNG';
@@ -14,7 +14,7 @@ import FooterPage from '../../components/Footer';
 const HomePage = (props) => {
   return (
     <div style={{ width: "100%" }}>
-      <Header />
+      <Layout/>
       <Flippy
         flipOnHover={true} // default false
         flipOnClick={false} // default false

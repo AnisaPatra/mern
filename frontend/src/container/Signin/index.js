@@ -125,12 +125,15 @@ export default class Signin extends Component {
             .then(
                 response => {
                     const { token, user } = response.data;
-                    localStorage.setItem("token", token);
-                    localStorage.setItem("user", JSON.stringify(user));
-                    this.setState({ users: response.data });
-                    this.setState({auth:true});
+                    if(localStorage.length == 0){
+                        localStorage.setItem("token", token);
+                        localStorage.setItem("user", JSON.stringify(user));
+                    }
                     
+                    this.setState({ users: response.data });
+                    this.setState({auth:true}); 
                 }
+                
             )
             .catch(err => window.alert("Invalid Password / EmailId"));
         } else {

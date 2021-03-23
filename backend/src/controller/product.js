@@ -43,7 +43,7 @@ exports.createProduct = (req, res) => {
             this.querystring = querystring;
     }
     sorting() {
-        if (this.query.sort) {
+        if (this.querystring.sort) {
             const sortby = this.querystring.sort.split(',').join(' ');
             this.query = this.query.sort(sortby);
         }
@@ -63,17 +63,19 @@ exports.createProduct = (req, res) => {
     }
     paginating(){
       const page = this.querystring.page * 1 || 1;
-      const limit = this.querystring.limit * 1 || 2;
+      const limit = this.querystring.limit * 1 || 10;
       const skip = (page -1) * limit;
        this.query = this.query.skip(skip).limit(limit);
        return this;
     }
-}
+  }
+  
 
 exports.getProductss = async (req, res) => {
   try {
-      const features = new APIfeatures(Product.find({}), req.query).filtering();
+      const features = new APIfeatures(Product.find(), req.query).filtering();
       const retailing = await features.query;
+      const propertyNames = Object.keys(retailing);
       res.status(200).json({
           retailing
       });
@@ -84,6 +86,7 @@ exports.getProductss = async (req, res) => {
       })
   }
 }
+
 exports.getproductById = (req,res) =>{
   Product.findById(req.params.id)
   .then(product => res.json(product))
@@ -103,31 +106,6 @@ exports.getProductforseller = (req,res) => {
     .then(exercises => res.json(exercises))
     .catch(err => res.status(400).json('Error: ' + err));
   }
-
-  exports.getProductsbySubMens = (req,res) =>{
-    Product.find({"sub_category": ObjectId("600079b39a6fbb5d58314633")})
-    .then(exercises => res.json(exercises))
-    .catch(err => res.status(400).json('Error: ' + err));
-  }
-
-  exports.getProductsbySubStaple = (req,res) =>{
-    Product.find({"sub_category": ObjectId("60007ad99a6fbb5d58314638")})
-    .then(exercises => res.json(exercises))
-    .catch(err => res.status(400).json('Error: ' + err));
-  }
-
-  exports.getProductsbySubPC = (req,res) =>{
-    Product.find({"sub_category": ObjectId("60007a7d9a6fbb5d58314635")})
-    .then(exercises => res.json(exercises))
-    .catch(err => res.status(400).json('Error: ' + err));
-  }
-
-  exports.getProductsbySubWomen = (req,res) =>{
-    Product.find({"sub_category": ObjectId("603bd7a925b51444e49e8168")})
-    .then(exercises => res.json(exercises))
-    .catch(err => res.status(400).json('Error: ' + err));
-  }
-  
 
   exports.deleteProduct = (req, res) => {
     Product.findByIdAndDelete(req.params.id)
