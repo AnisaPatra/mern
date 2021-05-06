@@ -310,10 +310,10 @@ const HomePage = (props) => {
         We also do not ask for money to participate  in any of our offers or run any lucky draws.
         </p> <br/>
       </div><br/><br/>
-      <div>
-      <iframe className="chat" src="https://console.dialogflow.com/api-client/demo/embedded/65564941-798d-4290-8724-b2d5d5c779ab">
+      <div>{/*
+      <iframe className="chat" src="https://console.dialogflow.com/api-client/demo/embedded/">  add your embedded file code over here for chatbot 
       </iframe> 
-      </div>
+      </div> */}
       <MDBIcon fab icon="rocketchat" size="3x" style={{ color: "#001a4d" }} onClick={()=>{$(".chat").fadeToggle()}}/>
       <FooterPage />
     </div>
