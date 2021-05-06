@@ -4,8 +4,7 @@ import FooterPage from '../../components/Footer'
 import { Jumbotron, Table } from "react-bootstrap";
 import Layout from '../../components/Layout';
 import axios from 'axios';
-import './style.css'
-import { Button } from 'bootstrap';
+import './style.css';
 /**
 * @author
 * @function Cart
@@ -35,13 +34,13 @@ export class Cart extends Component {
                     cart_details: response.data,
                     cart: response.data[0].cartItems
                 })
+                console.log(response.data[0].cartItems.length)
                 return axios.get("http://localhost:2000/api/payment_options/")
             })
             .then(response => {
                 this.setState({
                     pays: response.data.map(pay => pay.name)
                 })
-                console.log(this.state.payment);
             })
             .catch((error) => {
                 console.log(error);
@@ -50,7 +49,6 @@ export class Cart extends Component {
 
     CartList() {
         return Object.entries(this.state.cart).map(currentcart => {
-            console.log(currentcart)
             return (<tr>
                 <td>{currentcart[1].product_name}</td>
                 <td>{currentcart[1].quantity}</td>

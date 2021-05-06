@@ -17,7 +17,7 @@ router.get('/retailers', getRetailer);
 router.get('/sellers', getSeller);
 router.delete('/users/:id',deleteUser);
 router.get('/users/:id',getUserById);
-router.get('/users',getUsers)
+router.get('/users',getUsers);
 router.put('/retailers/update/:id',requireSignin,adminorreatilerMiddleware,updateRetailer);
 router.put('/sellers/update/:id',requireSignin,adminorsellerMiddleware,updateSeller);
 router.put('/users/update/:id',requireSignin,adminMiddleware,updateUser);

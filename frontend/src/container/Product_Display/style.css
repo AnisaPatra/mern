@@ -1,6 +1,6 @@
 .card-img-top {
     width: 100%;
-    height: 50vw;
+    height: 35vw;
     object-fit: cover;
     margin: 15px;
 }
@@ -53,28 +53,28 @@
 }
 
 .inc{
-    background-color: black;
-    color:rgb(230, 151, 4);
+    background-color: #ff9933;
+    color:black;
     font-size: 32px;
     border: none;
     padding-left: 15px;
 }
 
 .dec{
-    background-color: black;
-    color:rgb(230, 151, 4);
+    background-color: #ff9933;
+    color:black;
     font-size: 35px;
     border: none;
     padding-right: 15px;
 }
 
 .quan{
-    background-color: black;
-    color:rgb(230, 151, 4);
+    background-color: #ff9933;
+    color:black;
     font-size: 35px;
     border: none;
-    width: 122px;
     margin-top: 15px;
+    
 }
 .add:active {
     transform: translateY(2px);

@@ -36,14 +36,14 @@ exports.adminMiddleware = (req,res,next) =>{
 }
 
 exports.adminorsellerMiddleware = (req,res,next) =>{
-    if(req.user.role == "Retailer"){
+    if(req.user.role != "Seller"){
         return res.status(400).json({message : "Access Denied"})
     }
     next();
 }
 
 exports.adminorreatilerMiddleware = (req,res,next) =>{
-    if(req.user.role != "admin" || req.user.role != "Retailer"){
+    if(req.user.role != "Retailer"){
         return res.status(400).json({message : "Access Denied"})
     }
     next();

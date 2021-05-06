@@ -3,8 +3,9 @@ import { Component } from 'react'
 import { Jumbotron } from 'react-bootstrap'
 import axios from 'axios';
 import './style.css';
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow } from 'mdbreact';
+import { MDBBtnGroup, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow } from 'mdbreact';
 import Layout from '../../components/Layout';
+import { Link } from 'react-router-dom';
 /**
 * @author
 * @function Product_Display
@@ -34,9 +35,9 @@ export class Product_Display extends Component {
       images: [],
       final_images: [],
       description: '',
-      v:null,
-      seller_id : null,
-      shop_name : ''
+      v: null,
+      seller_id: null,
+      shop_name: ''
     }
   }
 
@@ -54,16 +55,15 @@ export class Product_Display extends Component {
           m_c: response.data.m_c,
           images: response.data.productPictures,
           description: response.data.description,
-          v : response.data.quantity,
-          seller_id : response.data.createdBy
+          v: response.data.quantity,
+          seller_id: response.data.createdBy
         });
-        return axios.get("http://localhost:2000/api/users/"+ this.state.seller_id)
+        return axios.get("http://localhost:2000/api/users/" + this.state.seller_id)
       })
-      .then(response =>{
+      .then(response => {
         this.setState({
-          shop_name : response.data.shop_name
-        }) 
-        console.log(response.data)
+          shop_name: response.data.shop_name
+        })
       })
       .catch((error) => {
         console.log(error);
@@ -71,12 +71,12 @@ export class Product_Display extends Component {
   }
 
   PCProductList() {
-    if(this.state.images.length > 1){
+    if (this.state.images.length > 1) {
       return Object.entries(this.state.images).map(currentproduct => {
         return <ProductCard product={currentproduct} />;
       })
     }
-    else{
+    else {
 
       return Object.entries(this.state.images).map(currentproduct => {
         return <ProductCardi product={currentproduct} />;
@@ -90,46 +90,46 @@ export class Product_Display extends Component {
       quantity: this.state.quantity + 1
     });
   };
-  
+
   decrement() {
-    if(this.state.quantity > this.state.v){
+    if (this.state.quantity > this.state.v) {
       this.setState({
         quantity: this.state.quantity - 1
       });
     }
   };
 
-  cart(){
-    if(window.localStorage.token != null){
-      axios.post("http://localhost:2000/api/retailer/cart/addtocart", 
-      {
-        "cartItems" : {
-          "product" : this.props.match.params.id,
-          "quantity" : this.state.quantity,
-          "price" : this.state.price * this.state.quantity,
-          "product_name" : this.state.name,
-          "seller" : this.state.seller_id
-        }
-      },
-      {
-        headers:{
-          'Authorization' : 'Bearer ' + window.localStorage.getItem('token') 
-        }
-      })
-      .then(
-        response => {
-          console.log("D")
-        }
-      )
-      .catch(err => window.alert(err));
-      window.location.href = "/cart/" + window.localStorage.user.substr(8,24) ;
+  cart() {
+    if (window.localStorage.token != null) {
+      axios.post("http://localhost:2000/api/retailer/cart/addtocart",
+        {
+          "cartItems": {
+            "product": this.props.match.params.id,
+            "quantity": this.state.quantity,
+            "price": this.state.price * this.state.quantity,
+            "product_name": this.state.name,
+            "seller": this.state.seller_id
+          }
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+          }
+        })
+        .then(
+          response => {
+            console.log("D")
+          }
+        )
+        .catch(err => window.alert(err));
+      window.location.href = "/cart/" + window.localStorage.user.substr(8, 24);
     }
-    else{
-      window.location.href = "/signin/" 
+    else {
+      window.location.href = "/signin/"
     }
-    
   }
   render() {
+
     return (
       <div>
         <Layout></Layout>
@@ -137,20 +137,20 @@ export class Product_Display extends Component {
         <Jumbotron style={{ backgroundColor: "white", margin: "50px" }}>
           <MDBRow>
             <MDBCol md="7">
-            {(() => {
-              if(this.state.images.length > 1){
-                return(
-                  <div class="row row-cols-1 row-cols-md-2 g-4">
+              {(() => {
+                if (this.state.images.length > 1) {
+                  return (
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                      {this.PCProductList()}
+                    </div>
+                  )
+                }
+                return (
+                  <div class="row row-cols-1 row-cols-md-1 g-4">
                     {this.PCProductList()}
                   </div>
                 )
-              }
-              return(
-                <div class="row row-cols-1 row-cols-md-1 g-4">
-                  {this.PCProductList()}
-                </div>                
-              )
-            })()}        
+              })()}
             </MDBCol>
             <MDBCol md="5">
               <MDBCard className="cardy">
@@ -166,23 +166,26 @@ export class Product_Display extends Component {
                     MOQ (Minimum Order Quantity) : {this.state.quantity}
                   </MDBCardText>
                   <MDBCardText className="description">
-                    Description : 
+                    Description :
                   </MDBCardText>
                   <MDBCardText className="description">
                     {this.state.description}
                   </MDBCardText>
                   <MDBCardText className="description">
-                    Seller : {this.state.shop_name}
+                    <Link to={"/seller/" + this.state.seller_id} style={{ color: "#50b46d" }}>Seller : {this.state.shop_name}</Link>
                   </MDBCardText>
-                  <hr/>
+                  <hr />
                   <div className="go_cart">
-                    <button className="add" onClick={this.cart}>Add to Cart</button>
-                    <p class="quan">
-                    <button className='dec' onClick={(e) => this.decrement(e)}>-</button>
-                    {this.state.quantity}
-                    <button className='inc' onClick={(e) => this.increment(e)}>+</button>
-                    </p>
+                    <button className="add" onClick={this.cart}>Add to Cart</button><br/>
+                    <div class="btn-group" role="group" >
+                      <p class="quan">
+                        <button className='dec' onClick={(e) => this.decrement(e)}>-</button>
+                        {this.state.quantity}
+                        <button className='inc' onClick={(e) => this.increment(e)}>+</button>
+                      </p>
+                    </div>
                   </div>
+
 
                 </MDBCardBody>
               </MDBCard>

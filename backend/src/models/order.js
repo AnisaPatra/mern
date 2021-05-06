@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     seller:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     status:{type:String, default:"Pending",enum: ['Cancelled','Delievered',"Shipped","Pending"]},
     payment:{type:String},
-    payment_status:{type:String,default:"Pending",enum: ['Order Cancelled','Delievered',"Pending"]}
+    payment_status:{type:String,default:"Pending",enum: ['Cancelled','Delievered',"Pending"]}
 }, { timestamps: true });
 
 

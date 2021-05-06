@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res) => {
-
     User.findOne({ email: req.body.email })
         .exec(async (error, user) => {
             if (user) return res.status(400).json({
@@ -16,7 +15,8 @@ exports.signup = (req, res) => {
                 contactNumber,
                 shop_name,
                 gstin,
-                role
+                role,
+                address
             } = req.body;
             const _user = new User({
                 name,
@@ -26,6 +26,7 @@ exports.signup = (req, res) => {
                 shop_name,
                 gstin,
                 role,
+                address,
                 username: Math.random().toString()
             });
             _user.save((error, data) => {
@@ -58,10 +59,10 @@ exports.signin_retailer = (req, res) => {
                 const isPassword = await user.authenticate(req.body.password);
                 if (isPassword && user.role === 'Retailer') {
                     const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-                    const { _id, email, contactNumber, role, shop_name, gstin } = user;
+                    const { _id, email, contactNumber, role, shop_name, gstin, address } = user;
                     res.status(200).json({
                         token,
-                        user: { _id, email, contactNumber, role, shop_name, gstin }
+                        user: { _id, email, contactNumber, role, shop_name, gstin, address }
                     });
                 }
                 else {
@@ -83,10 +84,10 @@ exports.signin_seller = (req, res) => {
                 const isPassword = await user.authenticate(req.body.password);
                 if (isPassword && user.role === 'Seller') {
                     const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-                    const { _id, email, contactNumber, role, shop_name, gstin } = user;
+                    const { _id, email, contactNumber, role, shop_name, gstin, address } = user;
                     res.status(200).json({
                         token,
-                        user: { _id, email, contactNumber, role, shop_name, gstin }
+                        user: { _id, email, contactNumber, role, shop_name, gstin, address }
                     });
                 }
                 else {
@@ -180,18 +181,20 @@ exports.deleteUser = (req, res) => {
 
 exports.updateRetailer = (req, res) => {
     User.findById(req.params.id)
-        .then(user => {
-            user.name = req.body.name;
-            user.email = req.body.email;
-            user.contactNumber = req.body.contactNumber;
-            user.shop_name = req.body.shop_name;
-            user.gstin = req.body.gstin;
-            user.role = "Retailer";
-            user.save()
-                .then(() => res.json('Retailer updated!'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+    .then(user => {
+        user.name = req.body.name;
+        user.email = req.body.email;
+        user.contactNumber = req.body.contactNumber;
+        user.shop_name = req.body.shop_name;
+        user.gstin = req.body.gstin;
+        user.role = "Retailer";
+        user.address = req.body.address;
+        user.password = req.body.password;
+        user.save()
+            .then(() => res.json('Retailer updated!'))
+            .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
 }
 
 exports.updateSeller = (req, res) => {
@@ -202,7 +205,9 @@ exports.updateSeller = (req, res) => {
             user.contactNumber = req.body.contactNumber;
             user.shop_name = req.body.shop_name;
             user.gstin = req.body.gstin;
+            user.address = req.body.address;
             user.role = "Seller";
+            user.password=req.body.password;
             user.save()
                 .then(() => res.json('Seller updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
@@ -219,6 +224,7 @@ exports.updateUser = (req, res) => {
             user.shop_name = req.body.shop_name;
             user.gstin = req.body.gstin;
             user.role = req.body.role;
+            user.address = req.body.address;
             user.save()
                 .then(
                     () => res.json('User updated!'))

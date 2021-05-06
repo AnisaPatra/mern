@@ -8,22 +8,29 @@ const SideNavigation = () => {
             <MDBListGroup className="list-group-flush">
                 <NavLink exact={true} to="/" activeClassName="activeClass">
                     <MDBListGroupItem>
-                        <MDBIcon icon="home" className="mr-3" size="lg"/>
+                        <MDBIcon icon="home" className="mr-3" size="lg" />
                         Home
+                    </MDBListGroupItem>
+                </NavLink>
+                <NavLink to={"/account_edit/" + window.localStorage.user.substr(8, 24)} activeClassName="activeClass">
+                    <MDBListGroupItem>
+                        <MDBIcon icon="user-edit" className="mr-3" size="lg" />
+                        Edit Profile
                     </MDBListGroupItem>
                 </NavLink>
                 <NavLink to="/products" activeClassName="activeClass">
                     <MDBListGroupItem>
-                    <MDBIcon fab icon="buromobelexperte" className="mr-3" size="lg"/>
+                        <MDBIcon fab icon="buromobelexperte" className="mr-3" size="lg" />
                         Products
                     </MDBListGroupItem>
                 </NavLink>
                 <NavLink to="/order" activeClassName="activeClass">
                     <MDBListGroupItem>
-                    <MDBIcon icon="shopping-cart" className="mr-3" size="lg"/>
+                        <MDBIcon icon="shopping-cart" className="mr-3" size="lg" />
                         Orders
                     </MDBListGroupItem>
                 </NavLink>
+
             </MDBListGroup>
         </div>
     );

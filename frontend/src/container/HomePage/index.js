@@ -1,11 +1,12 @@
 import React from 'react';
 import Layout from '../../components/Layout';
-import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask } from "mdbreact";
+import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBIcon, MDBBtn } from "mdbreact";
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import n1 from '../../images/Capture (2).PNG';
 import n2 from '../../images/vocal for local.jpg';
 import './style.css';
 import FooterPage from '../../components/Footer';
+import $ from 'jquery';
 /**
 * @author
 * @function HomePage
@@ -41,7 +42,7 @@ const HomePage = (props) => {
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
             <MDBView>
-              <a href="/category/Food">
+              <a href="/product/604a62e6824d6743ec69f37e">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/apple.PNG"
@@ -54,7 +55,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="2">
             <MDBView>
-              <a href="/category/Footwear">
+              <a href="/category/5ffdd29744c1cd618c8bff50">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/kitchen and dinning.PNG"
@@ -79,7 +80,7 @@ const HomePage = (props) => {
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
             <MDBView>
-              <a href="/category/Food">
+              <a href="/category/5ffdd03144c1cd618c8bff4e">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/LUQ50EhOD_food1.jpeg"
@@ -92,7 +93,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="2">
             <MDBView>
-              <a href="/category/Footwear">
+              <a href="/category/5ffdd1b944c1cd618c8bff4f">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/qnBd4BeOX_footwear_banner.jpg"
@@ -103,7 +104,7 @@ const HomePage = (props) => {
             </MDBView>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="3">
-            <a href="/category/HK">
+            <a href="/category/5ffdd29744c1cd618c8bff50">
               <MDBView>
                 <img
                   className="d-block w-100"
@@ -115,7 +116,7 @@ const HomePage = (props) => {
             </a>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="4">
-            <a href="/category/EA">
+            <a href="/category/601440c69c1ea23c4cb84bf5">
               <MDBView>
                 <img
                   className="d-block w-100"
@@ -127,7 +128,7 @@ const HomePage = (props) => {
             </a>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="5">
-            <a href="/category/Clothing">
+            <a href="/category/601e4fb8cfdbdf1324b3f368">
               <MDBView>
                 <img
                   className="d-block w-100"
@@ -153,7 +154,7 @@ const HomePage = (props) => {
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
             <MDBView>
-              <a href="/category/Food">
+              <a href="/category/5ffdd03144c1cd618c8bff4e">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/82VjnotzK_pc.webp"
@@ -166,7 +167,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="2">
             <MDBView>
-              <a href="/category/Food">
+              <a href="/category/5ffdd03144c1cd618c8bff4e">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/q3knRnTNC_ch.jpg"
@@ -178,7 +179,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="3">
             <MDBView>
-              <a href="/category/Food">
+              <a href="/category/5ffdd03144c1cd618c8bff4e">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/Df5SvTiFf_staple.jpg"
@@ -190,7 +191,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="4">
             <MDBView>
-              <a href="/category/Footwear">
+              <a href="/category/5ffdd1b944c1cd618c8bff4f">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/DFdxuWKix_floaters.jpg"
@@ -202,7 +203,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="5">
             <MDBView>
-              <a href="/category/Footwear">
+              <a href="/category/5ffdd1b944c1cd618c8bff4f">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/Om-TOzOgi_sandals.jpg"
@@ -214,10 +215,10 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="6">
             <MDBView>
-              <a href="/category/Footwear">
+              <a href="/category/5ffdd1b944c1cd618c8bff4f">
                 <img
                   className="d-block w-100"
-                  src="http://localhost:2000/public/h9FJAoi49_shoes.jpg"
+                  src="http://localhost:2000/public/Cariuma_Sneaker_Review_FB.webp"
                   alt="4 slide"
                   style={{ height: "600px" }}
                 />
@@ -226,7 +227,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="7">
             <MDBView>
-              <a href="/category/HK">
+              <a href="/category/5ffdd29744c1cd618c8bff50">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/UAdJEbNiT_ka.jpg"
@@ -238,7 +239,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="8">
             <MDBView>
-              <a href="/category/HK">
+              <a href="/category/5ffdd29744c1cd618c8bff50">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/1w53lTViZ_decor.jpg"
@@ -250,7 +251,7 @@ const HomePage = (props) => {
           </MDBCarouselItem>
           <MDBCarouselItem itemId="9">
             <MDBView>
-              <a href="/category/EA">
+              <a href="/category/601440c69c1ea23c4cb84bf5">
                 <img
                   className="d-block w-100"
                   src="http://localhost:2000/public/0Eh_zrmV5_jdP9jushc-consumer electronics.jpg"
@@ -261,7 +262,7 @@ const HomePage = (props) => {
             </MDBView>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="10">
-            <a href="/category/EA">
+            <a href="/category/601440c69c1ea23c4cb84bf5">
               <MDBView>
                 <img
                   className="d-block w-100"
@@ -273,7 +274,7 @@ const HomePage = (props) => {
             </a>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="11">
-            <a href="/category/Clothing">
+            <a href="/category/601e4fb8cfdbdf1324b3f368">
               <MDBView>
                 <img
                   className="d-block w-100"
@@ -285,7 +286,7 @@ const HomePage = (props) => {
             </a>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="12">
-            <a href="/category/Clothing">
+            <a href="/category/601e4fb8cfdbdf1324b3f368">
               <MDBView>
                 <img
                   className="d-block w-100"
@@ -308,8 +309,12 @@ const HomePage = (props) => {
         <p>
         We also do not ask for money to participate  in any of our offers or run any lucky draws.
         </p> <br/>
+      </div><br/><br/>
+      <div>
+      <iframe className="chat" src="https://console.dialogflow.com/api-client/demo/embedded/65564941-798d-4290-8724-b2d5d5c779ab">
+      </iframe> 
       </div>
-
+      <MDBIcon fab icon="rocketchat" size="3x" style={{ color: "#001a4d" }} onClick={()=>{$(".chat").fadeToggle()}}/>
       <FooterPage />
     </div>
 

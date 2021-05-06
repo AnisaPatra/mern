@@ -33,14 +33,14 @@ export default class Order extends Component {
       }
     
       componentDidMount() {
-        axios.get('http://localhost:2000/api/orders?user='+ localStorage.user.substr(8,24),
+        axios.get('http://localhost:2000/api/order/'+ localStorage.user.substr(8,24),
         {
             headers:{
                 'Authorization' : 'Bearer ' + window.localStorage.getItem('token') 
             }
         })
           .then(response => {
-            this.setState({ merge3: response.data.retailing });
+            this.setState({ merge3: response.data });
             console.log(response.data)
           })
           .catch((error) => {

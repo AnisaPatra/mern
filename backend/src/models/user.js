@@ -42,31 +42,36 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {        
+    role: {
         type: String,
-        enum: ['Retailer','Seller'],
+        enum: ['Retailer', 'Seller'],
         required: true
     },
-    contactNumber: { 
+    contactNumber: {
         type: String,
         validate: /^[789]\d{9}$/,
         required: true,
         unique: true
-     },
+    },
+    address: {
+        type: String,
+        required: true,
+        unique: true
+    },
     pofilePicture: { type: String }
-}, 
-{ timestamps: true }
+},
+    { timestamps: true }
 
 );
 
 
 userSchema.virtual('password')
-.set(function(password){
-    this.hash_password = bcrypt.hashSync(password,10)
-});
+    .set(function (password) {
+        this.hash_password = bcrypt.hashSync(password, 10)
+    });
 
 userSchema.methods = {
-    authenticate: async function(password){
+    authenticate: async function (password) {
         return bcrypt.compareSync(password, this.hash_password);
     }
 }

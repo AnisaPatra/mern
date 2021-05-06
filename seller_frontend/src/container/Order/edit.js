@@ -11,25 +11,21 @@ export default class EditOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            product_name: null,
             user: null,
-            quantity: null,
-            price: null,
             status: null,
-            payment: null,
-            payment_status: null,
-            pays: [],
-            payCategory: "Cash on Delivery"
+            payment_status: "Pending",
+            seller:null,
+            product:null,
+            product_name:null
         };
 
-        this.onChangehandle = this.onChangehandle.bind(this);
         this.onChangestatus = this.onChangestatus.bind(this);
         this.onChangepayment_status = this.onChangepayment_status.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
-        axios.get('http://localhost:2000/api//order/' + this.props.match.params.id,
+        axios.get('http://localhost:2000/api/order_id/' + this.props.match.params.id,
             {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('token')
@@ -37,34 +33,25 @@ export default class EditOrder extends Component {
             })
             .then(response => {
                 this.setState({
-                    product_name: response.data.product_name,
                     user: response.data.user,
-                    quantity: response.data.quantity,
-                    price: response.data.price,
+                    seller:response.data.seller,
+                    product : response.data.product,
                     status: response.data.status,
-                    payment: response.data.payment,
                     payment_status: response.data.payment_status,
+                    product_name:response.data.product_name
                 })
-                return axios.get('http://localhost:2000/api/payment_options/')
-            })
-            .then(response => {
-                this.setState({ pays: response.data.map(payCategory => payCategory.name) })
+                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
             })
     }
 
-    onChangehandle(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-
     onChangestatus(e) {
         this.setState({
             status: e.target.value
         })
+        console.log(e)
     }
 
     onChangepayment_status(e) {
@@ -75,15 +62,13 @@ export default class EditOrder extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("product_name", this.state.product_name);
-        formData.append("price", this.state.price);
-        formData.append("quantity", this.state.quantity);
-        formData.append("user", this.state.user);
-        formData.append("status", this.state.status);
-        formData.append("payment", this.state.payment);
-        formData.append("payment_status", this.state.payment_status);
-        axios.put('http://localhost:2000/api//order/' + this.props.match.params.id, formData,
+        axios.put('http://localhost:2000/api/order/' + this.props.match.params.id,{
+            "user" : this.state.user,
+            "seller" : this.state.seller,
+            "product" : this.state.product,
+            "status" : this.state.status,
+            "payment_status" : this.state.payment_status
+        },
             {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('token')
@@ -93,10 +78,12 @@ export default class EditOrder extends Component {
                 response => {
                     this.setState({ result: response.data });
                     console.log(response.data)
+                    window.alert("Order Updated Successfully");
                 }
-            );
-
-        window.alert("Order Updated Successfully");
+            )
+            .catch((error) => {
+                window.alert(error);
+            })
     }
 
     render() {
@@ -114,69 +101,25 @@ export default class EditOrder extends Component {
                                     <tbody class="tbody">
                                         <tr>
                                             <td>
-                                                <label>Name: </label>
-                                            </td>
-                                            <td>
-                                                <MDBInput type="text"
-                                                    disabled
-                                                    required
-                                                    maxlength="200"
-                                                    minlength="3"
-                                                    style={{ width: "250px" }}
-                                                    value={this.state.product_name}
-                                                    onChange={this.onChangehandle}
-                                                    name="product_name"
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 <label>Customer ID: </label>
                                             </td>
                                             <td>
                                                 <MDBInput type="text"
-                                                    required
                                                     disabled
-                                                    maxlength="200"
-                                                    minlength="3"
                                                     style={{ width: "250px" }}
                                                     value={this.state.user}
-                                                    onChange={this.onChangehandle}
-                                                    name="user"
                                                 />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Quantity: </label>
+                                                Product:
                                             </td>
                                             <td>
-                                                <MDBInput type="text"
-                                                    required
-                                                    maxlength="50"
-                                                    minlength="1"
+                                            <MDBInput type="text"
                                                     disabled
                                                     style={{ width: "250px" }}
-                                                    value={this.state.quantity}
-                                                    onChange={this.onChangehandle}
-                                                    name="quantity"
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Price: </label>
-                                            </td>
-                                            <td>
-                                                <MDBInput type="text"
-                                                    required
-                                                    disabled
-                                                    maxlength="50"
-                                                    minlength="1"
-                                                    style={{ width: "250px" }}
-                                                    value={this.state.price}
-                                                    onChange={this.onChangehandle}
-                                                    name="price"
+                                                    value={this.state.product_name}
                                                 />
                                             </td>
                                         </tr>
@@ -189,32 +132,7 @@ export default class EditOrder extends Component {
                                                     <option value="Cancelled">Cancelled</option>
                                                     <option value="Shipped">Shipped</option>
                                                     <option value="Delivered">Delivered</option>
-                                                    <option value="Pending">Pending</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Payment Type: </label>
-                                            </td>
-                                            <td>
-                                                <select ref="userInput"
-                                                    style={{ width: "250px" }}
-                                                    required
-                                                    disabled
-                                                    maxlength="40"
-                                                    minlength="3"
-                                                    name = "payment"
-                                                    className="form-control"
-                                                    value={this.state.payment}>
-                                                    {
-                                                        this.state.pays.map(function (subcat) {
-                                                            return <option
-                                                                key={subcat}
-                                                                value={subcat}>{subcat}
-                                                            </option>;
-                                                        })
-                                                    }
+                                                    <option selected value="Pending">Pending</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -224,9 +142,9 @@ export default class EditOrder extends Component {
                                             </td>
                                             <td>
                                             <select required className="form-control-boot"  name="payment_status" onChange={this.onChangepayment_status}>
-                                                    <option value="Cancelled">Order Cancelled</option>
+                                                    <option value="Cancelled">Cancelled</option>
                                                     <option value="Delivered">Delivered</option>
-                                                    <option value="Pending">Pending</option>
+                                                    <option selected value="Pending">Pending</option>
                                                 </select>
                                             </td>
                                         </tr>

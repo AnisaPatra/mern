@@ -14,22 +14,22 @@ import $ from 'jquery';
 **/
 
 export default class AddProducts extends Component {
- 
+
     constructor(props) {
         super(props);
         this.state = {
             name: null,
-            brand:null,
-            description:null,
-            m_c:"Keep Dry",
-            price:null,
-            moq:null,
+            brand: null,
+            description: null,
+            m_c: "Keep Dry",
+            price: null,
+            moq: null,
             ProductImages: [],
             parentCategory: "Food",
             sub_category: "Personal Care",
             parents: [],
-            sub:[],
-            result:[]
+            sub: [],
+            result: []
         };
 
         this.onChangehandle = this.onChangehandle.bind(this);
@@ -40,9 +40,9 @@ export default class AddProducts extends Component {
 
     }
 
-    onChangehandle(e){
+    onChangehandle(e) {
         this.setState({
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
@@ -54,7 +54,7 @@ export default class AddProducts extends Component {
         console.log(this.state.ProductImages[0][0]);
     }
 
-    
+
 
     onChangeparentCategory(e) {
         this.setState({
@@ -62,9 +62,9 @@ export default class AddProducts extends Component {
         })
     }
 
-    onChangesubCategory(e){
+    onChangesubCategory(e) {
         this.setState({
-            sub_category:e.target.value
+            sub_category: e.target.value
         })
     }
     componentDidMount() {
@@ -73,8 +73,8 @@ export default class AddProducts extends Component {
                 this.setState({ parents: response.data.map(parent => parent.name) })
                 return axios.get('http://localhost:2000/api/category/subcategory')
             })
-            .then(response=>{
-                this.setState({sub: response.data.map(subcat =>subcat.name)})
+            .then(response => {
+                this.setState({ sub: response.data.map(subcat => subcat.name) })
             })
             .catch((error) => {
                 console.log(error);
@@ -85,16 +85,16 @@ export default class AddProducts extends Component {
         e.preventDefault();
         const formData = new FormData();
         formData.append("name", this.state.name);
-        formData.append("brand",this.state.brand);
-        formData.append("price",this.state.price);
-        formData.append("quantity",this.state.moq);
-        formData.append("description",this.state.description);
-        formData.append("parent_category",this.state.parentCategory);
-        formData.append("sub_category",this.state.sub_category);
-        formData.append("m_c",this.state.m_c);
+        formData.append("brand", this.state.brand);
+        formData.append("price", this.state.price);
+        formData.append("quantity", this.state.moq);
+        formData.append("description", this.state.description);
+        formData.append("parent_category", this.state.parentCategory);
+        formData.append("sub_category", this.state.sub_category);
+        formData.append("m_c", this.state.m_c);
         for (let pic of this.state.ProductImages) {
             formData.append("productPicture", pic);
-          }
+        }
         axios.post('http://localhost:2000/api/product/create', formData,
             {
                 headers: {
@@ -104,10 +104,13 @@ export default class AddProducts extends Component {
             .then(
                 response => {
                     this.setState({ result: response.data });
+                    window.alert("Product Added Successfully");
                 }
-            );
+            )
+            .catch((error) => {
+                window.alert(error);
+            })
 
-        window.alert("Product Created Successfully");
         this.setState({
             name: "",
             brand: "",
@@ -116,8 +119,8 @@ export default class AddProducts extends Component {
             description: "",
             parentCategory: "Food",
             sub_category: "Personal Care",
-            m_c : "Keep Dry",
-            ProductImages:[]
+            m_c: "Keep Dry",
+            ProductImages: []
         })
     }
 
@@ -131,12 +134,11 @@ export default class AddProducts extends Component {
                     <SideNavigation />
                     <main id="content" className="p-5" >
                         <Container style={{ backgroundColor: "white" }}>
-                            <br /><br />
-                            <label class="filter">Add Product: &nbsp;&nbsp; </label>
-                            <br /><br /><br />
+                            <h2 class="h2">Add Product</h2>
+                            <br />
                             <div>
                                 <form onSubmit={this.onSubmit}>
-                                
+
                                     <table cellPadding="20" cellSpacing="25" style={{ float: "left", marginTop: '30px' }}>
                                         <tbody class="tbody">
                                             <tr>
@@ -199,9 +201,8 @@ export default class AddProducts extends Component {
                                                 <td>
                                                     <MDBInput type="text"
                                                         required
-                                                        min = "1"
-                                                        maxlength="50"
-                                                        minlength="1"
+                                                        min="1"
+                                                        max="99999"
                                                         style={{ width: "250px" }}
                                                         value={this.state.price}
                                                         onChange={this.onChangehandle}
@@ -217,8 +218,7 @@ export default class AddProducts extends Component {
                                                     <MDBInput type="text"
                                                         required
                                                         min="1"
-                                                        maxlength="10"
-                                                        minlength="1"
+                                                        max="99999"
                                                         style={{ width: "250px" }}
                                                         value={this.state.moq}
                                                         onChange={this.onChangehandle}
@@ -227,54 +227,54 @@ export default class AddProducts extends Component {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                        <td>
-                                                            <label>Parent Category: </label>
-                                                        </td>
-                                                        <td>
-                                                            <select ref="userInput"
-                                                                style={{ width: "250px" }}
-                                                                required
-                                                                maxlength="40"
-                                                                minlength="3"
-                                                                className="form-control"
-                                                                value={this.state.parentCategory}
-                                                                onChange={this.onChangeparentCategory}>
-                                                                {
-                                                                    this.state.parents.map(function (parent) {
-                                                                        return <option
-                                                                            key={parent}
-                                                                            value={parent}>{parent}
-                                                                        </option>;
-                                                                    })
-                                                                }
-                                                            </select>
-                                                        </td>
-                                                    </tr>      
-                                                    <tr>
-                                                        <td>
-                                                            <label>Sub Category: </label>
-                                                        </td>
-                                                        <td>
-                                                            <select ref="userInput"
-                                                                style={{ width: "250px" }}
-                                                                required
-                                                                maxlength="40"
-                                                                minlength="3"
-                                                                className="form-control"
-                                                                value={this.state.sub_category}
-                                                                onChange={this.onChangesubCategory}>
-                                                                {
-                                                                    this.state.sub.map(function (subcat) {
-                                                                        return <option
-                                                                            key={subcat}
-                                                                            value={subcat}>{subcat}
-                                                                        </option>;
-                                                                    })
-                                                                }
-                                                            </select>
-                                                        </td>
-                                                    </tr> 
-                                                    <tr>
+                                                <td>
+                                                    <label>Parent Category: </label>
+                                                </td>
+                                                <td>
+                                                    <select ref="userInput"
+                                                        style={{ width: "250px" }}
+                                                        required
+                                                        maxlength="40"
+                                                        minlength="3"
+                                                        className="form-control"
+                                                        value={this.state.parentCategory}
+                                                        onChange={this.onChangeparentCategory}>
+                                                        {
+                                                            this.state.parents.map(function (parent) {
+                                                                return <option
+                                                                    key={parent}
+                                                                    value={parent}>{parent}
+                                                                </option>;
+                                                            })
+                                                        }
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Sub Category: </label>
+                                                </td>
+                                                <td>
+                                                    <select ref="userInput"
+                                                        style={{ width: "250px" }}
+                                                        required
+                                                        maxlength="40"
+                                                        minlength="3"
+                                                        className="form-control"
+                                                        value={this.state.sub_category}
+                                                        onChange={this.onChangesubCategory}>
+                                                        {
+                                                            this.state.sub.map(function (subcat) {
+                                                                return <option
+                                                                    key={subcat}
+                                                                    value={subcat}>{subcat}
+                                                                </option>;
+                                                            })
+                                                        }
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>
                                                     <label>Material and Care: </label>
                                                 </td>
@@ -289,7 +289,7 @@ export default class AddProducts extends Component {
                                                         name="m_c"
                                                     />
                                                 </td>
-                                            </tr>     
+                                            </tr>
                                             <tr>
                                                 <td>
                                                     <label>Description: </label>
@@ -306,7 +306,7 @@ export default class AddProducts extends Component {
                                                     />
                                                 </td>
                                             </tr>
-                                                    
+
                                             <br /><br />
                                             <tr>
                                                 <td>

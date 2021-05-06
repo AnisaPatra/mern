@@ -1,10 +1,9 @@
 import './style.css';
-import { MDBCol, MDBFormInline, MDBIcon } from "mdbreact";
+import { MDBBadge, MDBIcon } from "mdbreact";
 import { Popover, OverlayTrigger, Button } from 'react-bootstrap';
 import { Component } from 'react';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
-import order from './order.png';
+import { NavLink, Link } from 'react-router-dom';
 /**
 * @author
 * @function Header
@@ -14,22 +13,12 @@ const popover = (
   <Popover id="popover-basic" style={{ backgroundColor: "#f2f2f2" }}>
     <Popover.Content>
       <center>
-        <Button variant="outline-success btn-rounded"><b>SIGN IN</b></Button></center>
+        <Button variant="outline-success btn-rounded" style={{ fontSize: "17px" }}><b>SIGN IN</b></Button></center>
       <p>To add or view parts of your cart</p>
     </Popover.Content>
   </Popover>
 );
 
-const popover_signout = (
-  <Popover id="popover-basic" style={{ backgroundColor: "#f2f2f2" }}>
-    <Popover.Content>
-      <center>
-        <Button variant="outline-success btn-rounded"><b>SIGN OUT</b></Button></center>
-      <p>To exit from your account please do Signout.</p>
-
-    </Popover.Content>
-  </Popover>
-);
 
 const ParentCategory = props => (
   <li className="catlist">
@@ -37,17 +26,14 @@ const ParentCategory = props => (
   </li>
 )
 
-
-
-
-
 export default class Header extends Component {
   constructor(props) {
     super(props);
     this.goo = this.goo.bind(this);
     this.state = {
       categories: [],
-      subcategories: []
+      subcategories: [],
+      cart_items:null
     };
   }
 
@@ -56,7 +42,19 @@ export default class Header extends Component {
     axios.get('http://localhost:2000/api/category/parentCategory')
       .then(response => {
         this.setState({ categories: response.data });
+        return axios.get("http://localhost:2000/api/retailer/cart/" + window.localStorage.user.substr(8, 24),
+          {
+            headers: {
+              'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+            }
+          })
       })
+      .then(response => {
+        this.setState({
+          cart_items: response.data[0].cartItems.length
+        })
+      })
+
       .catch((error) => {
         console.log(error);
       })
@@ -64,11 +62,7 @@ export default class Header extends Component {
 
   categoryList() {
     return this.state.categories.map(currentcategory => {
-      console.log(currentcategory.name);
       return <ParentCategory category={currentcategory} key={currentcategory._id} />;
-      if(currentcategory.name == "Food" || currentcategory.name == "Home and Kitchen" || currentcategory.name == "Clothing"){
-        return <ParentCategory category={currentcategory} key={currentcategory._id} />;
-      }
     })
   }
 
@@ -116,7 +110,6 @@ export default class Header extends Component {
       <a>{numbers}</a>
     )
   }
-
   render() {
     return (
       <div className="App">
@@ -134,66 +127,63 @@ export default class Header extends Component {
                   </div>
                 </div>
               </ul>
-
-              {/*<MDBCol md="3">
-                <MDBFormInline className="md-form">
-                  <input className="form-control form-control-sm ml-3 w-85" type="text" placeholder="Search" aria-label="Search" />
-                  <button><MDBIcon icon="search" /></button>
-                </MDBFormInline>
-              </MDBCol>*/}
+              {/*<div className="search">
+                <input type="text" placeholder="Search Products" value={this.state.search} onChange={(e) => this.setState({ search: e.target.value })} style={{ border: "none", width: "70%" }} />
+                <Link to={{
+                  pathname: '/search_results',
+                  state: this.state.search
+                }} style={{ border: "none", backgroundColor: "white" }}>
+                  <MDBIcon icon="search" />
+                </Link>
+              </div>*/}
               <ul className="navbar-nav ml-auto nav-flex-icons">
                 <li className="nav-item">
                   <a className="nav-link waves-effect waves-light">
                     {(() => {
                       if (window.localStorage.getItem('token') === null) {
                         return (
-                          <OverlayTrigger trigger="hover" placement="bottom" overlay={popover}>
-                            <MDBIcon icon="shopping-cart" size="lg" style={{ color: "black" }} />
-                          </OverlayTrigger>
+                          <MDBIcon icon="shopping-cart" size="lg" style={{ color: "black" }} />
                         )
                       }
                       return (
-                          <NavLink to={ "/cart/"+window.localStorage.user.substr(8,24)} className="nav-link waves-effect waves-light">
-                            <MDBIcon icon="shopping-cart" size="lg" style={{ color: "black" }} />
-                          </NavLink>
+                        <NavLink to={"/cart/" + window.localStorage.user.substr(8, 24)} className="nav-link waves-effect waves-light">
+                          <MDBIcon icon="shopping-cart" size="lg" style={{ color: "black" }} />
+                          <MDBBadge pill color="info" style={{top:"10px"}}>{this.state.cart_items}</MDBBadge>
+                        </NavLink>
                       );
                     })()}
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link waves-effect waves-light">
-                    {(() => {
-                      if (window.localStorage.getItem('token') === null) {
-                        return (
-                          <OverlayTrigger trigger="hover" placement="bottom" overlay={popover}>
-                            <img src={order}/>
-                          </OverlayTrigger>
-                        )
-                      }
-                      return (
-                          <NavLink to={ "/order/"+window.localStorage.user.substr(8,24)} className="nav-link waves-effect waves-light">
-                            <img src={order}/>
-                          </NavLink>
-                      );
-                    })()}
-                  </a>
-                </li>
-                <li className="nav-item" style={{}}>
                   {(() => {
                     if (window.localStorage.getItem('token') === null) {
                       return (
                         <OverlayTrigger trigger="hover" placement="bottom" overlay={popover}>
                           <NavLink to="/signin" className="nav-link waves-effect waves-light">
-                          <MDBIcon icon="user-circle" size="lg" style={{ color: "black" }} />
+                            <MDBIcon icon="user-circle" size="lg" style={{ color: "black" }} />
                           </NavLink>
                         </OverlayTrigger>
                       )
                     }
                     return (
-                      <OverlayTrigger trigger="hover" placement="bottom" overlay={popover_signout}>
-                        <NavLink to="/signin" onClick={this.signout} className="nav-link waves-effect waves-light">
-                          <MDBIcon icon="user-circle" size="lg" style={{ color: "black" }} data-toggle="modal" data-target="#modalLoginRegister" />
-                        </NavLink>
+                      <OverlayTrigger trigger="click" placement="bottom" overlay={
+                        <Popover id="popover-basic" style={{ backgroundColor: "#f2f2f2" }}>
+                          <Popover.Content >
+                            <center>
+                              <NavLink to={"/order/" + window.localStorage.user.substr(8, 24)} className="profile_navs">
+                                Orders
+                              </NavLink><br />
+                              <NavLink to={"/account_edit/" + window.localStorage.user.substr(8, 24)} className="profile_navs">
+                                Edit Profile
+                              </NavLink><br />
+                              <NavLink to={"/signin"} onClick={this.signout} className="profile_navs">
+                                Sign Out
+                              </NavLink>
+                            </center>
+                          </Popover.Content>
+                        </Popover>
+                      }>
+                        <MDBIcon icon="user-circle" size="lg" style={{ color: "black", marginTop: "18px" }} data-toggle="modal" data-target="#modalLoginRegister" />
                       </OverlayTrigger>
                     );
                   })()}

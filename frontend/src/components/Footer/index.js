@@ -29,7 +29,9 @@ const FooterPage = () => {
             <MDBIcon fab icon="pinterest-square" size="2x" style={{padding: "5px"}}/>
             <MDBIcon fab icon="youtube-square" size="2x" style={{padding: "5px"}}/>
             <br /><br/>
-            <input type="email" placeholder="Subscribe For Updates" style={{height:"38px"}}/><button class="btn btn-success">Subscribe</button>
+            <input type="email" placeholder="Subscribe For Updates" style={{height:"38px"}}/>
+            <br/>
+            <button class="btn btn-success" style={{width:"120px"}}>Subscribe</button>
 
           </MDBCol>
         </MDBRow>

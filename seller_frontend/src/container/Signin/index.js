@@ -48,7 +48,7 @@ const Signin = (props) => {
                                     <label style={{ fontWeight: 'bold' }}>Email</label>
                                 </td>
                                 <td>
-                                     <MDBInput required style={{width:"250px"}} hint="Email" type="email" value={email} 
+                                     <MDBInput required style={{width:"250px"}} hint="Email" pattern = "^[a-zA-Z0-9.!#$%'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" value={email} 
                                         onChange={(e) => setEmail(e.target.value)} />
                                 </td>
                             </tr>

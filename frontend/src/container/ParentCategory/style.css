@@ -1,7 +1,7 @@
 
 .main-view{
     width: 1380px;
-    min-height: 7380px;
+    min-height: 2500px;
     margin: auto;
     margin-top: 50px;
     background: #fff;
@@ -58,7 +58,7 @@
     line-height: 1.3em;
 }
 .main-view .sub li{
-    padding-left: 4.5rem;
+    padding-left: 3rem;
     padding-bottom: 5px;
     text-align: justify;   
     font-family: Lora; 
@@ -125,4 +125,50 @@ ul{
     font-size: 17px;
     font-weight: 700;
     color: black;
+}
+
+.filter-container {
+    height: 60px;
+    border-top: 1px solid #e5e3e3;
+    border-bottom: 1px solid #e5e3e3;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    margin-top: 25px;
+}
+
+.sort{
+    font-size: 20px;
+    padding-top: 2px;
+    padding-right: 2px;
+    font-weight:bold;
+    font-family:Copperplate;
+    padding: 5px;
+    padding-top: 10px;
+    color: #666;
+}
+
+.form-control-boot{
+    font-family:Copperplate;
+    padding: 5px;
+    padding-top: 10px;
+    color: #666;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-padding-end: 20px;
+    -moz-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -moz-padding-start: 2px;
+    outline: none;
+    border: none;
+    color: #666;
+    font-size: 20px;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search{
+    margin-bottom: 50px;
+    float: right;
 }

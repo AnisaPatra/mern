@@ -10,3 +10,9 @@
     font-weight: 1000;
     transform: translate(-30%, -50%);
   }
+
+  .chat{
+    right: 0;
+    height: 500px;
+    width: 350px;
+  }

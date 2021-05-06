@@ -1,18 +1,18 @@
-import React, { useEffect }  from 'react'
+import React  from 'react'
 import HomePage from './container/HomePage';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import Signin from './container/Signin';
-import PrivateRoute from './components/HOC/PrivateRoute';
-import { useDispatch, useSelector } from 'react-redux';
-import { isUserLoggedIn} from './actions/auth.actions';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { signout } from '../src/actions/auth.actions';
 import ParentCategory from '../src/container/ParentCategory';
 import Product_Display from './container/Product_Display';
 import Cart from './container/Cart';
 import Order from './container/Order';
+import Edit_Profile from './container/Profile';
+import Seller from './container/Seller';
+import EditOrder from './container/Order/edit';
+import Search from './container/Search';
 
 function App() {
   return (
@@ -24,6 +24,10 @@ function App() {
         <Route path="/product/:id" component={Product_Display} />
         <Route path = "/cart/:id" component = {Cart}/>
         <Route path = "/order/:id" component = {Order}/>
+        <Route path = "/order_edit/:id" component={EditOrder}/>
+        <Route path = '/account_edit/:id' component={Edit_Profile} />
+        <Route path = '/seller/:id' component={Seller} />
+        <Route path = '/search_results' component={Search}/>
       </Switch>
     </div>
   );

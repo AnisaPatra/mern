@@ -13,6 +13,8 @@ import AddProducts from './container/Products/AddProducts';
 import EditProduct from './container/Products/EditProduct';
 import Order from './container/Order/index';
 import EditOrder from './container/Order/edit';
+import Edit_Profile from './container/Profile';
+import Retailer from './container/Retailer';
 
 function App() {
 {/*
@@ -43,8 +45,11 @@ function App() {
         <PrivateRoute path="/product_edit/:id" component={EditProduct} />
         <PrivateRoute exact path='/products/add' component={AddProducts} />
         <PrivateRoute exact path = '/order' component={Order}/>
-        <PrivateRoute exact path='/order_edit/:id' component={EditOrder}/>        
+        <PrivateRoute exact path='/order_edit/:id' component={EditOrder}/>  
+        <PrivateRoute exact path = '/account_edit/:id' component={Edit_Profile} /> 
+        <PrivateRoute exact path = '/retailer/:id' component={Retailer} />     
         <Route path="/signin" component={Signin} />
+        
 
       </Switch>
     </div>
